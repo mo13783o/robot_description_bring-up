@@ -1,0 +1,1153 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <xacro:arg name="robot_name" default="my_robot"/>
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="use_gazebo" default="false"/>
+
+  <!-- ==================== -->
+  <!-- Include sensor macros -->
+  <!-- ==================== -->
+ <xacro:include filename="$(find my_robot_description)/urdf/sensors/lidar.urdf.xacro"/>
+<xacro:include filename="$(find my_robot_description)/urdf/sensors/imu.urdf.xacro"/>
+<xacro:include filename="$(find my_robot_description)/urdf/sensors/rgbd_camera.urdf.xacro"/>
+  <!-- ==================== -->
+  <!-- Main robot links & joints -->
+  <!-- Paste your URDF content here (without <robot> tag) -->
+  <!-- Example: -->
+
+
+
+
+
+
+
+
+  <link
+    name="base_link">
+    
+    <inertial>
+      <origin
+        xyz="-0.0173359281710816 -0.00326579504651667 0.179683429242062"
+        rpy="0 0 0" />
+      <mass
+        value="9.44546223682839" />
+      <inertia
+        ixx="0.264509748452257"
+        ixy="0.000632648838143622"
+        ixz="-0.0259023023578355"
+        iyy="0.30744420580099"
+        iyz="-4.48415010430435E-06"
+        izz="0.424242064074621" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.956862745098039 0.956862745098039 0.956862745098039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+      <!-- BASE_FOOTPRINT LINK -->
+
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="base_footprint">
+    </link>
+
+
+
+  <link
+    name="LB_above_link">
+    <inertial>
+      <origin
+        xyz="-0.0043511846352115 -1.25307952624117E-06 -0.017637217770487"
+        rpy="0 0 0" />
+      <mass
+        value="0.0613934593613199" />
+      <inertia
+        ixx="6.84020280641822E-05"
+        ixy="-3.68996328607424E-09"
+        ixz="-1.10186894346824E-05"
+        iyy="7.08258211057998E-05"
+        iyz="-4.84220030273478E-09"
+        izz="6.96936246250135E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LB_above_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LB_above_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_above_joint"
+    type="continuous">
+    <origin
+      xyz="-0.399729040475105 0.244251423359786 -0.157999999999999"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="LB_above_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="LB_below_link">
+    <inertial>
+      <origin
+        xyz="-5.03917192809511E-06 -3.18265486187741E-09 -0.0318999292944038"
+        rpy="0 0 0" />
+      <mass
+        value="0.282878366071618" />
+      <inertia
+        ixx="0.00037220906936453"
+        ixy="1.95924077982568E-15"
+        ixz="-6.3090182725381E-10"
+        iyy="0.000372204012630136"
+        iyz="2.56610051274169E-12"
+        izz="0.00069227461337227" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LB_below_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.596078431372549 0.619607843137255 0.631372549019608 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LB_below_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_below_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0295228180170212 0.0319 -0.0925076162853427"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="LB_above_link" />
+    <child
+      link="LB_below_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="RB_above_link">
+    <inertial>
+      <origin
+        xyz="-0.00435118463521134 -1.25307952641984E-06 -0.0176372177704868"
+        rpy="0 0 0" />
+      <mass
+        value="0.0613934593613195" />
+      <inertia
+        ixx="6.84020280641811E-05"
+        ixy="-3.6899632859696E-09"
+        ixz="-1.10186894346818E-05"
+        iyy="7.0825821105799E-05"
+        iyz="-4.84220030288135E-09"
+        izz="6.96936246250134E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RB_above_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RB_above_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_above_joint"
+    type="continuous">
+    <origin
+      xyz="-0.39972904047509 -0.244748576640214 -0.157999999999998"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="RB_above_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="RB_below_link">
+    <inertial>
+      <origin
+        xyz="-5.03917192817838E-06 -3.18265483412183E-09 0.0345000707055961"
+        rpy="0 0 0" />
+      <mass
+        value="0.282878366071619" />
+      <inertia
+        ixx="0.000372209069364545"
+        ixy="1.95921717621499E-15"
+        ixz="-6.30901829737797E-10"
+        iyy="0.000372204012630151"
+        iyz="2.56610086000659E-12"
+        izz="0.000692274613372272" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RB_below_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.596078431372549 0.619607843137255 0.631372549019608 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RB_below_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_below_link"
+    type="continuous">
+    <origin
+      xyz="-0.0295228180170215 -0.0345 -0.0925076162853426"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="RB_above_link" />
+    <child
+      link="RB_below_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="RM_link">
+    <inertial>
+      <origin
+        xyz="-3.33066907387547E-16 -8.32667268468867E-17 0.0157545783722145"
+        rpy="0 0 0" />
+      <mass
+        value="0.0777558845808905" />
+      <inertia
+        ixx="3.03837077610577E-05"
+        ixy="-6.87422244207606E-20"
+        ixz="1.27199918619595E-19"
+        iyy="3.03837077610577E-05"
+        iyz="-6.28037847583061E-20"
+        izz="5.25266191826487E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RM_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.749019607843137 0.749019607843137 0.749019607843137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RM_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0374114525207011 -0.305348576640202 -0.233000000000002"
+      rpy="-1.57079632679488 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="RM_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="LM_link">
+    <inertial>
+      <origin
+        xyz="2.22044604925031E-16 2.22044604925031E-16 -0.0157545783722145"
+        rpy="0 0 0" />
+      <mass
+        value="0.0777558845808906" />
+      <inertia
+        ixx="3.03837077610577E-05"
+        ixy="1.89341642213388E-20"
+        ixz="1.77338334884233E-20"
+        iyy="3.03837077610577E-05"
+        iyz="1.33899338592691E-19"
+        izz="5.25266191826487E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LM_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.745098039215686 0.737254901960784 0.729411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LM_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0374114525207191 0.304851423359795 -0.23299999999999"
+      rpy="-1.57079632679487 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="LM_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="LF_above_link">
+    <inertial>
+      <origin
+        xyz="-0.00584419614752874 3.12824593728944E-08 -0.028396528181358"
+        rpy="0 0 0" />
+      <mass
+        value="0.158197868402843" />
+      <inertia
+        ixx="8.20585646900215E-05"
+        ixy="1.54739529684221E-11"
+        ixz="-1.40536491272341E-05"
+        iyy="0.000100197139407139"
+        iyz="1.25994214649835E-11"
+        izz="0.000101365612600187" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LF_above_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.666666666666667 0.698039215686274 0.768627450980392 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LF_above_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_above_joint"
+    type="continuous">
+    <origin
+      xyz="0.399770959524882 0.274751423359812 -0.136350000000002"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="LF_above_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="LF_below_link">
+    <inertial>
+      <origin
+        xyz="3.66373598126302E-15 -1.22124532708767E-15 -0.0338249999999973"
+        rpy="0 0 0" />
+      <mass
+        value="0.50932693354864" />
+      <inertia
+        ixx="0.00097947117418515"
+        ixy="1.79994501291081E-20"
+        ixz="-4.54220631504571E-17"
+        iyy="0.000979471174185149"
+        iyz="8.23953145271242E-19"
+        izz="0.00179052978188696" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LF_below_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.8 0.549019607843137 0.0941176470588235 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/LF_below_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_below_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0343013158455636 0.0338249999999973 -0.100400000000001"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="LF_above_link" />
+    <child
+      link="LF_below_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="RF_above_link">
+    <inertial>
+      <origin
+        xyz="-0.00584419614752885 3.12824591786054E-08 -0.028396528181358"
+        rpy="0 0 0" />
+      <mass
+        value="0.158197868402843" />
+      <inertia
+        ixx="8.20585646900215E-05"
+        ixy="1.54739525288212E-11"
+        ixz="-1.40536491272341E-05"
+        iyy="0.000100197139407139"
+        iyz="1.25994211325327E-11"
+        izz="0.000101365612600187" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RF_above_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.666666666666667 0.698039215686274 0.768627450980392 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RF_above_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_above_joint"
+    type="continuous">
+    <origin
+      xyz="0.399770959524897 -0.275248576640188 -0.136350000000001"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="RF_above_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="RF_below_link">
+    <inertial>
+      <origin
+        xyz="-1.77635683940025E-15 -5.55111512312578E-16 0.0370000000000019"
+        rpy="0 0 0" />
+      <mass
+        value="0.50932693354864" />
+      <inertia
+        ixx="0.00097947117418515"
+        ixy="-9.88205105138641E-21"
+        ixz="8.62399511605814E-18"
+        iyy="0.00097947117418515"
+        iyz="-8.10494606713213E-18"
+        izz="0.00179052978188696" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RF_below_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.8 0.549019607843137 0.0941176470588235 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/RF_below_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_below_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0343013158455587 -0.0370000000000028 -0.1004"
+      rpy="-1.57079632679491 0 0" />
+    <parent
+      link="RF_above_link" />
+    <child
+      link="RF_below_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="Arm_base_link">
+    <inertial>
+      <origin
+        xyz="0.0743210627412523 0.0020535507130959 0.0303766512817761"
+        rpy="0 0 0" />
+      <mass
+        value="0.596956244666979" />
+      <inertia
+        ixx="0.000889854311157364"
+        ixy="3.42344555440443E-05"
+        ixz="1.67326918151295E-06"
+        iyy="0.000846463276378769"
+        iyz="1.98088711619665E-06"
+        izz="0.00129765550155221" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/Arm_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/Arm_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Arm_base_joint"
+    type="fixed">
+    <origin
+      xyz="0.202476412824287 0.0505838494416569 0.503000000000002"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Arm_base_link" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0"
+      friction="0" />
+  </joint>
+  <link
+    name="j1_arm_link">
+    <inertial>
+      <origin
+        xyz="0.00420174247296967 0.0423916412699365 0.0631341468852042"
+        rpy="0 0 0" />
+      <mass
+        value="0.415376557240287" />
+      <inertia
+        ixx="0.000991697764759544"
+        ixy="-3.7316292977693E-05"
+        ixz="-5.02626937909087E-05"
+        iyy="0.000498333443759079"
+        iyz="-0.000117692324167274"
+        izz="0.00117994290845592" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j1_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.0117647058823529 0.207843137254902 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j1_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j1_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.107294546700604 0.00166757391815214 0.0234999999999956"
+      rpy="0 0 0" />
+    <parent
+      link="Arm_base_link" />
+    <child
+      link="j1_arm_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="j2_arm_link">
+    <inertial>
+      <origin
+        xyz="0.0493584175521729 -0.127103634653766 -0.0677818888954157"
+        rpy="0 0 0" />
+      <mass
+        value="0.464439854489216" />
+      <inertia
+        ixx="0.000808974831529887"
+        ixy="0.000313515736099717"
+        ixz="-2.68280724929656E-06"
+        iyy="0.000342985206017058"
+        iyz="1.59807954569419E-06"
+        izz="0.00109551520672245" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j2_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.0117647058823529 0.207843137254902 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j2_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j2_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.0183985052903536 0.123850818237505 0.0860000000000007"
+      rpy="-1.5707963267949 0 0.0406846778022905" />
+    <parent
+      link="j1_arm_link" />
+    <child
+      link="j2_arm_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="j3_arm_link">
+    <inertial>
+      <origin
+        xyz="0.0144657216333286 -0.0133398628009128 -0.0288595200174173"
+        rpy="0 0 0" />
+      <mass
+        value="0.309065226433941" />
+      <inertia
+        ixx="0.000332337046548756"
+        ixy="6.88771067049113E-05"
+        ixz="1.3758697195177E-05"
+        iyy="0.000366204832484272"
+        iyz="-9.7383418848551E-06"
+        izz="0.000440628811947639" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j3_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.0117647058823529 0.207843137254902 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j3_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j3_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.120758547102581 -0.251059130342023 -0.0847999999999965"
+      rpy="0 0 0" />
+    <parent
+      link="j2_arm_link" />
+    <child
+      link="j3_arm_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="j4_arm_link">
+    <inertial>
+      <origin
+        xyz="0.0245583572473754 0.0010323856782043 0.0629957607516995"
+        rpy="0 0 0" />
+      <mass
+        value="0.214918375739812" />
+      <inertia
+        ixx="0.000246202249978267"
+        ixy="1.96606142716026E-07"
+        ixz="-4.25320588970752E-05"
+        iyy="0.000225958388809587"
+        iyz="-2.90965074581061E-06"
+        izz="0.000136935614994053" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j4_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j4_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j4_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.0734332921250569 -0.039343412506755 -0.0352000000000054"
+      rpy="1.5707963267787 1.56845608998159 1.62831773689441" />
+    <parent
+      link="j3_arm_link" />
+    <child
+      link="j4_arm_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="j5_arm_link">
+    <inertial>
+      <origin
+        xyz="-0.00384887511350618 -0.000500557620593645 0.0405839933894945"
+        rpy="0 0 0" />
+      <mass
+        value="0.0919163429029346" />
+      <inertia
+        ixx="5.92239127135203E-05"
+        ixy="-1.88476037756838E-06"
+        ixz="-4.28858595424254E-07"
+        iyy="7.61564544342833E-05"
+        iyz="-1.35259261636946E-07"
+        izz="7.94013928077046E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j5_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.745098039215686 0.737254901960784 0.729411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j5_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j5_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.0460019581798649 0.00369355433397323 0.155300000000005"
+      rpy="0.749397627579391 -1.57079631189374 -0.669411330897685" />
+    <parent
+      link="j4_arm_link" />
+    <child
+      link="j5_arm_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="j6_arm_link">
+    <inertial>
+      <origin
+        xyz="-0.000152162355650354 -0.000135673878179698 -0.0495377560436174"
+        rpy="0 0 0" />
+      <mass
+        value="0.0429572165131491" />
+      <inertia
+        ixx="8.45134404787206E-06"
+        ixy="5.332282510701E-08"
+        ixz="5.9315773141716E-08"
+        iyy="8.40993133107192E-06"
+        iyz="4.21011605156051E-08"
+        izz="1.21682905312419E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j6_arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.282352941176471 0.27843137254902 0.23921568627451 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_robot_description/meshes/rosmaster_x3/visual/j6_arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j6_arm_joint"
+    type="revolute">
+    <origin
+      xyz="0.0506489179242555 0.00597386919024678 0.046149999999993"
+      rpy="-1.5707963267948 1.49597339048923 -1.45339211088573" />
+    <parent
+      link="j5_arm_link" />
+    <child
+      link="j6_arm_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.15"
+      upper="3.15"
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+<link name="imu_link">
+    <visual>
+      <geometry><box size="0.02 0.02 0.01"/></geometry>
+    </visual>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.006" rpy="0 0 0"/>
+  </joint>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Paste all your other links and joints from your original URDF here -->
+
+  <!-- ==================== -->
+  <!-- Sensors -->
+  <!-- ==================== -->
+  <xacro:lidar_sensor
+    prefix="$(arg prefix)"
+    parent="base_link"
+    frame_id="laser_frame"
+    xyz_offset="0 0 -0.05"
+    rpy_offset="0 0 0"
+    mesh_xyz_offset="0 0 0"
+    mesh_rpy_offset="${-M_PI/2} 0 0"
+    topic_name="scan"/>
+
+  
+
+  <xacro:rgbd_camera
+    prefix="$(arg prefix)"
+    camera_name="d435"
+    parent="base_link"
+    xyz_offset="0.5 0 0.5"
+    rpy_offset="0 -0.50 0"/>
+
+
+
+</robot>

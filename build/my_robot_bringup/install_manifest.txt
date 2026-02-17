@@ -1,0 +1,7 @@
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/robot_full.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/past/master.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/past/mapping.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/past/localization.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/robot_bridge.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/launch/robot_teleop.launch.py
+/home/mosrorr/ros2_ws/install/my_robot_bringup/share/my_robot_bringup/config/ekf.yaml

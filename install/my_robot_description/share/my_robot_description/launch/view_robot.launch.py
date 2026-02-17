@@ -1,0 +1,1 @@
+/home/mosrorr/ros2_ws/src/my_robot_description/launch/view_robot.launch.py
