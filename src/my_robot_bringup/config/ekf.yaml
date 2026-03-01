@@ -50,18 +50,21 @@ ekf_filter_node:
     # --------------------------------------------------------------------
     odom0: /odom/raw
     odom0_config: [
-      false,  # x position - Don't use (will drift over time)
-      false,  # y position - Don't use (will drift over time)
-      false,  # z position - Not applicable for 2D robot
-      false,  # roll - Not applicable for 2D robot
-      false,  # pitch - Not applicable for 2D robot
-      false,  # yaw - Don't use (prefer IMU gyro for rotation)
-      true,   # x velocity - USE (from wheel encoders)
-      true,   # y velocity - USE (should be ~0 for diff drive)
-      false,  # z velocity - Not applicable for 2D robot
-      false,  # roll velocity - Not applicable
-      false,  # pitch velocity - Not applicable
-      true    # yaw velocity - USE (from differential drive kinematics)
+      false,  # x
+      false,  # y
+      false,  # z
+      false,  # roll
+      false,  # pitch
+      false,  # yaw
+      true,   # x velocity
+      true,   # y velocity (should be ~0 for differential drive)
+      false,  # z velocity
+      false,  # roll velocity
+      false,  # pitch velocity
+      true,   # yaw velocity
+      false,  # x acceleration (MISSING IN YOUR ORIGINAL)
+      false,  # y acceleration (MISSING IN YOUR ORIGINAL)
+      false   # z acceleration (MISSING IN YOUR ORIGINAL)
     ]
     
     # Differential mode for odometry (use velocity, not position)
@@ -83,18 +86,21 @@ ekf_filter_node:
     # --------------------------------------------------------------------
     imu0: /imu/data
     imu0_config: [
-      false,  # x position - Not provided by IMU
-      false,  # y position - Not provided by IMU
-      false,  # z position - Not provided by IMU
-      false,  # roll - Don't use (2D robot, should be ~0)
-      false,  # pitch - Don't use (2D robot, should be ~0)
-      true,   # yaw - USE (integrated from gyro, better than odometry)
-      false,  # x velocity - Not directly measured
-      false,  # y velocity - Not directly measured
-      false,  # z velocity - Not applicable
-      false,  # roll velocity - Not applicable for 2D
-      false,  # pitch velocity - Not applicable for 2D
-      true    # yaw velocity - USE (gyro measurement, most reliable)
+      false,  # x
+      false,  # y
+      false,  # z
+      false,  # roll
+      false,  # pitch
+      false,  # yaw (CHANGED TO FALSE: We don't have a compass)
+      false,  # x velocity
+      false,  # y velocity
+      false,  # z velocity
+      false,  # roll velocity
+      false,  # pitch velocity
+      true,   # yaw velocity (USE: This is the raw gyroscope data)
+      false,  # x acceleration (We ignore accel for 2D driving)
+      false,  # y acceleration
+      false   # z acceleration
     ]
     
     # Differential mode for IMU

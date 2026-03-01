@@ -7,7 +7,7 @@
     prefix:=''
     camera_name:='cam_1'
     parent:='base_link'
-    mesh_file:='file://$(find my_robot_bringup)/meshes/rosmaster_x3/visual/d435.stl'
+    mesh_file:='file://$(find my_robot_description)/meshes/rosmaster_x3/visual/d435.stl'
     xyz_offset:='0.105 0 0.05'
     rpy_offset:='0 -0.50 0'
     mesh_xyz_offset:='0 0 0'

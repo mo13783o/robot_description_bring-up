@@ -197,32 +197,6 @@ my_robot_bringup_uninstall/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_robot_bringup_uninstall.dir/build.make CMakeFiles/my_robot_bringup_uninstall.dir/build
 .PHONY : my_robot_bringup_uninstall/fast
 
-#=============================================================================
-# Target rules for targets named ament_cmake_python_symlink_my_robot_bringup
-
-# Build rule for target.
-ament_cmake_python_symlink_my_robot_bringup: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ament_cmake_python_symlink_my_robot_bringup
-.PHONY : ament_cmake_python_symlink_my_robot_bringup
-
-# fast build rule for target.
-ament_cmake_python_symlink_my_robot_bringup/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_symlink_my_robot_bringup.dir/build.make CMakeFiles/ament_cmake_python_symlink_my_robot_bringup.dir/build
-.PHONY : ament_cmake_python_symlink_my_robot_bringup/fast
-
-#=============================================================================
-# Target rules for targets named ament_cmake_python_build_my_robot_bringup_egg
-
-# Build rule for target.
-ament_cmake_python_build_my_robot_bringup_egg: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ament_cmake_python_build_my_robot_bringup_egg
-.PHONY : ament_cmake_python_build_my_robot_bringup_egg
-
-# fast build rule for target.
-ament_cmake_python_build_my_robot_bringup_egg/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_build_my_robot_bringup_egg.dir/build.make CMakeFiles/ament_cmake_python_build_my_robot_bringup_egg.dir/build
-.PHONY : ament_cmake_python_build_my_robot_bringup_egg/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -236,8 +210,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... ament_cmake_python_build_my_robot_bringup_egg"
-	@echo "... ament_cmake_python_symlink_my_robot_bringup"
 	@echo "... my_robot_bringup_uninstall"
 	@echo "... uninstall"
 .PHONY : help

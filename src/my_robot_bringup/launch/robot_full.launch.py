@@ -39,7 +39,7 @@ def generate_launch_description():
     # Serial port configuration
     serial_port_arg = DeclareLaunchArgument(
         'serial_port',
-        default_value='/dev/ttyUSB0',
+        default_value='/dev/ttyACM0',
         description='Serial port for ESP32 connection (e.g., /dev/ttyUSB0, /dev/ttyACM0)'
     )
     
@@ -130,7 +130,7 @@ def generate_launch_description():
     # ESP32 serial bridge node for motor control and sensor data
     esp32_bridge_node = Node(
         package='my_robot_bringup',
-        executable='esp32_bridge_node.py'
+        executable='esp32_bridge_node.py',
         name='esp32_bridge_node',
         output='screen',
         parameters=[{
@@ -179,7 +179,7 @@ def generate_launch_description():
     keyboard_teleop_node = Node(
         package='my_robot_bringup',
         
-        executable='keyboard_teleop_node.py'
+        executable='keyboard_teleop_node.py',
 
         name='keyboard_teleop_node',
         output='screen',

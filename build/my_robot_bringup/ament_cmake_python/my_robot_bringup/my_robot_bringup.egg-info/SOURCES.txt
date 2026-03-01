@@ -1,8 +1,0 @@
-setup.py
-my_robot_bringup/__init__.py
-my_robot_bringup/esp32_bridge_node.py
-my_robot_bringup/keyboard_teleop_node.py
-my_robot_bringup.egg-info/PKG-INFO
-my_robot_bringup.egg-info/SOURCES.txt
-my_robot_bringup.egg-info/dependency_links.txt
-my_robot_bringup.egg-info/top_level.txt

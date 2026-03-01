@@ -1,1 +1,0 @@
-/home/mosrorr/ros2_ws/src/my_robot_bringup/my_robot_bringup/__init__.py

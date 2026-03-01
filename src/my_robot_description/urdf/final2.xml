@@ -1094,17 +1094,6 @@
       damping="0.1"
       friction="0.1" />
   </joint>
-<link name="imu_link">
-    <visual>
-      <geometry><box size="0.02 0.02 0.01"/></geometry>
-    </visual>
-  </link>
-
-  <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="imu_link"/>
-    <origin xyz="0 0 0.006" rpy="0 0 0"/>
-  </joint>
 
 
 
@@ -1138,6 +1127,15 @@
     mesh_xyz_offset="0 0 0"
     mesh_rpy_offset="${-M_PI/2} 0 0"
     topic_name="scan"/>
+
+ <xacro:imu_sensor
+    prefix="$(arg prefix)"
+    parent="base_link"
+    frame_id="imu"
+    xyz_offset="0 0 0.006"
+    rpy_offset="0 0 0"
+    update_rate="15.0"
+    topic_name="imu/data"/>  
 
   
 

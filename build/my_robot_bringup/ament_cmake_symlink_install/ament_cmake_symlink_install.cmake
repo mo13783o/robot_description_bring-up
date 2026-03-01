@@ -310,20 +310,14 @@ message(STATUS "Execute custom install script")
 
 # begin of custom install code
 
-# install(FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/my_robot_bringup/environment")
-ament_cmake_symlink_install_files("/home/mosrorr/ros2_ws/src/my_robot_bringup" FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_environment_hooks/pythonpath.sh" "DESTINATION" "share/my_robot_bringup/environment")
-
-# install(FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/my_robot_bringup/environment")
-ament_cmake_symlink_install_files("/home/mosrorr/ros2_ws/src/my_robot_bringup" FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_environment_hooks/pythonpath.dsv" "DESTINATION" "share/my_robot_bringup/environment")
-
-# install(DIRECTORY "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_python/my_robot_bringup/my_robot_bringup.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/my_robot_bringup-0.0.1-py3.10.egg-info")
-ament_cmake_symlink_install_directory("/home/mosrorr/ros2_ws/src/my_robot_bringup" DIRECTORY "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_python/my_robot_bringup/my_robot_bringup.egg-info/" "DESTINATION" "local/lib/python3.10/dist-packages/my_robot_bringup-0.0.1-py3.10.egg-info")
-
-# install(DIRECTORY "/home/mosrorr/ros2_ws/src/my_robot_bringup/my_robot_bringup/" "DESTINATION" "local/lib/python3.10/dist-packages/my_robot_bringup" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
-ament_cmake_symlink_install_directory("/home/mosrorr/ros2_ws/src/my_robot_bringup" DIRECTORY "/home/mosrorr/ros2_ws/src/my_robot_bringup/my_robot_bringup/" "DESTINATION" "local/lib/python3.10/dist-packages/my_robot_bringup" "PATTERN_EXCLUDE" "*.pyc" "PATTERN_EXCLUDE" "__pycache__")
-
 # install(PROGRAMS "my_robot_bringup/esp32_bridge_node.py" "my_robot_bringup/keyboard_teleop_node.py" "DESTINATION" "lib/my_robot_bringup")
 ament_cmake_symlink_install_programs("/home/mosrorr/ros2_ws/src/my_robot_bringup" PROGRAMS "my_robot_bringup/esp32_bridge_node.py" "my_robot_bringup/keyboard_teleop_node.py" "DESTINATION" "lib/my_robot_bringup")
+
+# install(DIRECTORY "launch" "DESTINATION" "share/my_robot_bringup")
+ament_cmake_symlink_install_directory("/home/mosrorr/ros2_ws/src/my_robot_bringup" DIRECTORY "launch" "DESTINATION" "share/my_robot_bringup")
+
+# install(DIRECTORY "config" "DESTINATION" "share/my_robot_bringup")
+ament_cmake_symlink_install_directory("/home/mosrorr/ros2_ws/src/my_robot_bringup" DIRECTORY "config" "DESTINATION" "share/my_robot_bringup")
 
 # install(FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/my_robot_bringup" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/mosrorr/ros2_ws/src/my_robot_bringup" FILES "/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/my_robot_bringup" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

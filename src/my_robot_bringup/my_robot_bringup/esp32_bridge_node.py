@@ -19,7 +19,7 @@ class ESP32BridgeNode(Node):
         super().__init__('esp32_bridge_node')
 
         # ================= PARAMETERS =================
-        self.declare_parameter('serial_port', '/dev/ttyUSB0')
+        self.declare_parameter('serial_port', '/dev/ttyACM0')
         self.declare_parameter('baud_rate', 115200)
         self.declare_parameter('timeout', 1.0)
 
@@ -210,25 +210,41 @@ class ESP32BridgeNode(Node):
     # ==================================================
     # IMU
     # ==================================================
-
-    def publish_imu(self, ax, ay, az, gx, gy, gz):
+def publish_imu(self, ax, ay, az, gx, gy, gz):
         imu = Imu()
         imu.header.stamp = self.get_clock().now().to_msg()
         imu.header.frame_id = self.imu_frame
 
+        # 1. THE "W" FIX: Prevent the EKF NaN Crash
+        imu.orientation.x = 0.0
+        imu.orientation.y = 0.0
+        imu.orientation.z = 0.0
+        imu.orientation.w = 1.0  # <--- Update w here!
+
+        # 2. Tell EKF we don't have a compass/magnetometer
+        # Setting the first covariance to -1.0 tells ROS to ignore IMU orientation
+        imu.orientation_covariance[0] = -1.0
+
+        # Linear Acceleration
         imu.linear_acceleration.x = ax
         imu.linear_acceleration.y = ay
         imu.linear_acceleration.z = az
 
+        # Angular Velocity (This is the actual "Omega")
         imu.angular_velocity.x = gx
         imu.angular_velocity.y = gy
         imu.angular_velocity.z = gz
 
-        imu.linear_acceleration_covariance[0] = 0.1
-        imu.angular_velocity_covariance[8] = 0.02
+        # 3. Add Safe Covariances (Diagonals) to prevent division by zero
+        imu.linear_acceleration_covariance[0] = 0.01
+        imu.linear_acceleration_covariance[4] = 0.01
+        imu.linear_acceleration_covariance[8] = 0.01
+
+        imu.angular_velocity_covariance[0] = 0.01
+        imu.angular_velocity_covariance[4] = 0.01
+        imu.angular_velocity_covariance[8] = 0.01
 
         self.imu_pub.publish(imu)
-
     # ==================================================
     # CLEANUP
     # ==================================================

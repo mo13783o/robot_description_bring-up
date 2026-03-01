@@ -46,22 +46,6 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   include("/home/mosrorr/ros2_ws/build/my_robot_bringup/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(
-        COMMAND
-        "/usr/bin/python3" "-m" "compileall"
-        "/home/mosrorr/ros2_ws/install/my_robot_bringup/local/lib/python3.10/dist-packages/my_robot_bringup"
-      )
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_robot_bringup/launch" TYPE DIRECTORY FILES "/home/mosrorr/ros2_ws/src/my_robot_bringup/launch/" FILES_MATCHING REGEX "/[^/]*\\.py$")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_robot_bringup/config" TYPE DIRECTORY FILES "/home/mosrorr/ros2_ws/src/my_robot_bringup/config/" FILES_MATCHING REGEX "/[^/]*\\.yaml$")
-endif()
-
 if(CMAKE_INSTALL_COMPONENT)
   set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
 else()

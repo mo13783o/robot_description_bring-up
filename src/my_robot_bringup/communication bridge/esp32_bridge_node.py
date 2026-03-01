@@ -18,7 +18,7 @@ class ESP32BridgeNode(Node):
         super().__init__('esp32_bridge_node')
         
         # Parameters
-        self.declare_parameter('serial_port', '/dev/ttyUSB0')
+        self.declare_parameter('serial_port', '/dev/ttyACM0')
         self.declare_parameter('baud_rate', 115200)
         self.declare_parameter('timeout', 1.0)
         self.declare_parameter('wheel_base', 0.2)  # meters
