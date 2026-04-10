@@ -52,13 +52,13 @@ def generate_launch_description():
     # Robot physical parameters
     wheel_base_arg = DeclareLaunchArgument(
         'wheel_base',
-        default_value='0.2',
+        default_value='0.61',
         description='Distance between left and right wheels in meters'
     )
     
     wheel_radius_arg = DeclareLaunchArgument(
         'wheel_radius',
-        default_value='0.05',
+        default_value='0.1',
         description='Radius of the wheels in meters'
     )
     

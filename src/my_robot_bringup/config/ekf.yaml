@@ -7,202 +7,171 @@ ekf_filter_node:
     # ====================================================================
     # GENERAL SETTINGS
     # ====================================================================
-    
+
     # The frequency, in Hz, at which the filter will output a position estimate
     frequency: 30.0
-    
+
     # The period, in seconds, after which we consider a sensor to have timed out
     sensor_timeout: 0.1
-    
+
     # If true, will publish the transform from the odom_frame to the base_link_frame
-    # This should be TRUE since EKF is responsible for the odom -> base_link transform
     publish_tf: true
-    
-    # If true, will publish the acceleration state
+
+    # Acceleration state publishing is not needed for 2D navigation
     publish_acceleration: false
-    
+
     # ====================================================================
     # FRAME DEFINITIONS
     # ====================================================================
-    
-    # The frame representing the robot's odometry origin
-    # This is the parent frame for odometry
-    odom_frame: odom
-    
-    # The frame attached to the robot's base
-    # This is the child frame for odometry
+
+    odom_frame:      odom
     base_link_frame: base_link
-    
-    # The frame representing the robot's position in the world
-    # Leave as 'odom' for now (no map frame until we add SLAM)
-    world_frame: odom
-    
+    world_frame:     odom   # No map frame until SLAM is added
+
     # ====================================================================
     # SENSOR INPUTS
     # ====================================================================
-    
+
     # Two data sources:
-    # odom0: Raw wheel odometry from ESP32 bridge
-    # imu0: IMU data (accel + gyro) from ESP32 bridge
-    
+    #   odom0 – raw wheel odometry from the ESP32 bridge  (/odom/raw)
+    #   imu0  – gyroscope + accelerometer from the ESP32  (/imu/data)
+
     # --------------------------------------------------------------------
-    # ODOM0: Wheel Odometry from ESP32 (via /odom/raw topic)
+    # ODOM0: Wheel Odometry  →  /odom/raw
     # --------------------------------------------------------------------
     odom0: /odom/raw
+
+    # FIX: For a differential drive robot the odometry is reliable for
+    # x/y position and yaw, plus their velocity equivalents.
+    # Enable absolute pose (x, y, yaw) AND velocities (vx, vyaw).
+    # y-velocity is included but will be ~0; the EKF handles this correctly.
     odom0_config: [
-      false,  # x
-      false,  # y
-      false,  # z
+      true,   # x             – use absolute position from integrated odometry
+      true,   # y
+      false,  # z             – 2D robot
       false,  # roll
       false,  # pitch
-      false,  # yaw
+      true,   # yaw           – use integrated yaw from encoders
       true,   # x velocity
-      true,   # y velocity (should be ~0 for differential drive)
+      false,  # y velocity    – diff-drive: no lateral movement
       false,  # z velocity
       false,  # roll velocity
       false,  # pitch velocity
       true,   # yaw velocity
-      false,  # x acceleration (MISSING IN YOUR ORIGINAL)
-      false,  # y acceleration (MISSING IN YOUR ORIGINAL)
-      false   # z acceleration (MISSING IN YOUR ORIGINAL)
+      false,  # x acceleration
+      false,  # y acceleration
+      false   # z acceleration
     ]
-    
-    # Differential mode for odometry (use velocity, not position)
-    odom0_differential: false
-    
-    # Relative mode (use relative measurements)
-    odom0_relative: false
-    
-    # Queue size for odometry messages
-    odom0_queue_size: 10
-    
-    # Process noise covariance for odometry
-    # Higher values = less trust in odometry
-    odom0_pose_rejection_threshold: 5.0
+
+    odom0_differential: false  # Use absolute pose, not deltas
+    odom0_relative:     false
+    odom0_queue_size:   10
+
+    odom0_pose_rejection_threshold:  5.0
     odom0_twist_rejection_threshold: 1.0
-    
+
     # --------------------------------------------------------------------
-    # IMU0: Inertial Measurement Unit from ESP32 (via /imu/data topic)
+    # IMU0: Inertial Measurement Unit  →  /imu/data
     # --------------------------------------------------------------------
     imu0: /imu/data
+
+    # FIX: Use only yaw velocity (gz) from the IMU.
+    # No absolute orientation is available (no magnetometer), and
+    # accelerations are not useful for 2D ground-robot localization.
     imu0_config: [
       false,  # x
       false,  # y
       false,  # z
       false,  # roll
       false,  # pitch
-      false,  # yaw (CHANGED TO FALSE: We don't have a compass)
+      false,  # yaw      – no magnetometer → no absolute heading
       false,  # x velocity
       false,  # y velocity
       false,  # z velocity
       false,  # roll velocity
       false,  # pitch velocity
-      true,   # yaw velocity (USE: This is the raw gyroscope data)
-      false,  # x acceleration (We ignore accel for 2D driving)
+      true,   # yaw velocity  – use gyroscope gz (primary fusion signal)
+      false,  # x acceleration
       false,  # y acceleration
       false   # z acceleration
     ]
-    
-    # Differential mode for IMU
+
     imu0_differential: false
-    
-    # Relative mode
-    imu0_relative: true
-    
-    # Queue size for IMU messages
-    imu0_queue_size: 10
-    
-    # Remove gravitational acceleration (IMU is assumed to measure it)
+    imu0_relative:     true   # IMU provides relative (not world-referenced) data
+    imu0_queue_size:   10
+
+    # FIX: Enable gravitational removal so the EKF sees only dynamic acceleration
     imu0_remove_gravitational_acceleration: true
-    
-    # Process noise covariance for IMU
-    imu0_pose_rejection_threshold: 0.8
-    imu0_twist_rejection_threshold: 0.8
+
+    imu0_pose_rejection_threshold:                0.8
+    imu0_twist_rejection_threshold:               0.8
     imu0_linear_acceleration_rejection_threshold: 0.8
-    
+
     # ====================================================================
     # PROCESS NOISE COVARIANCE
     # ====================================================================
-    
-    # Process noise covariance matrix
-    # Diagonal matrix representing uncertainty in the prediction model
-    # Format: [x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az]
-    # Higher values = model is less trusted, sensors are more trusted
-    
+    # Diagonal of the 15×15 Q matrix.
+    # Order: x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az
+    # Higher value = less trust in the prediction model.
+
     process_noise_covariance: [
-      0.05,   # x position variance
-      0.05,   # y position variance
-      0.06,   # z position variance
-      0.03,   # roll variance
-      0.03,   # pitch variance
-      0.06,   # yaw variance
-      0.025,  # x velocity variance
-      0.025,  # y velocity variance
-      0.04,   # z velocity variance
-      0.01,   # roll velocity variance
-      0.01,   # pitch velocity variance
-      0.02,   # yaw velocity variance
-      0.01,   # x acceleration variance
-      0.01,   # y acceleration variance
-      0.01    # z acceleration variance
+      0.05,   # x
+      0.05,   # y
+      0.06,   # z
+      0.03,   # roll
+      0.03,   # pitch
+      0.06,   # yaw
+      0.025,  # vx
+      0.025,  # vy
+      0.04,   # vz
+      0.01,   # vroll
+      0.01,   # vpitch
+      0.02,   # vyaw
+      0.01,   # ax
+      0.01,   # ay
+      0.01    # az
     ]
-    
+
     # ====================================================================
     # INITIAL STATE COVARIANCE
     # ====================================================================
-    
-    # Initial estimate error covariance matrix
-    # Represents initial uncertainty in the robot's state
-    # Same format as process_noise_covariance
-    
+    # Represents initial uncertainty in the robot's state.
+    # Same order as process_noise_covariance.
+
     initial_estimate_covariance: [
-      1.0,    # x position
-      1.0,    # y position
-      1e-9,   # z position (2D robot)
-      1e-9,   # roll (2D robot)
-      1e-9,   # pitch (2D robot)
+      1.0,    # x
+      1.0,    # y
+      1e-9,   # z       (2D robot – constrained)
+      1e-9,   # roll
+      1e-9,   # pitch
       1.0,    # yaw
-      1.0,    # x velocity
-      1.0,    # y velocity
-      1e-9,   # z velocity
-      1e-9,   # roll velocity
-      1e-9,   # pitch velocity
-      1.0,    # yaw velocity
-      1e-9,   # x acceleration
-      1e-9,   # y acceleration
-      1e-9    # z acceleration
+      1.0,    # vx
+      1.0,    # vy
+      1e-9,   # vz
+      1e-9,   # vroll
+      1e-9,   # vpitch
+      1.0,    # vyaw
+      1e-9,   # ax
+      1e-9,   # ay
+      1e-9    # az
     ]
-    
+
     # ====================================================================
     # ADVANCED SETTINGS
     # ====================================================================
-    
-    # Use control input (cmd_vel) to improve prediction
-    # Set to false for now, can enable later if needed
-    use_control: false
-    
-    # Stamped control (if use_control is true)
+
+    use_control:     false
     stamped_control: false
-    
-    # Control timeout
     control_timeout: 0.2
-    
-    # Enable 2D mode (constrains z, roll, pitch to zero)
+
+    # Constrain z, roll, pitch to zero for a planar robot
     two_d_mode: true
-    
-    # Enable debug output
+
     print_diagnostics: false
-    
-    # Smooth Lagged Data (helps with sensor synchronization)
-    smooth_lagged_data: false
-    
-    # History length for smoothing
-    history_length: 0.0
-    
-    # ====================================================================
-    # DYNAMIC RECONFIGURE (for runtime parameter tuning)
-    # ====================================================================
-    
-    # Enable dynamic reconfigure server
-    # Allows changing parameters without restarting the node
+
+    # FIX: Enable smooth_lagged_data to compensate for serial timing jitter
+    # between the ESP32 publish rate and the ROS clock.
+    smooth_lagged_data: true
+    history_length:     0.2   # seconds of history to maintain
+
     dynamic_process_noise_covariance: false

@@ -17,12 +17,12 @@ def generate_launch_description():
 
     wheel_base_arg = DeclareLaunchArgument(
         'wheel_base',
-        default_value='0.2'
+        default_value='0.61'
     )
 
     wheel_radius_arg = DeclareLaunchArgument(
         'wheel_radius',
-        default_value='0.05'
+        default_value='0.1'
     )
 
     linear_speed_arg = DeclareLaunchArgument(
